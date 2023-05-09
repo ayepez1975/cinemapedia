@@ -75,8 +75,8 @@ class _Slide extends StatelessWidget {
     final textstyle = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: (){
-        print(movie.id);
-        context.push('/movie/${movie.id}');
+        
+        context.push('/home/0/movie/${movie.id}');
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8),
