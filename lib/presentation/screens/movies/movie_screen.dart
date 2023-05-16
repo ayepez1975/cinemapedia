@@ -1,4 +1,3 @@
-
 import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/presentation/providers/actors/actor_by_movie_provider.dart';
@@ -140,46 +139,45 @@ class _ActorByMovie extends ConsumerWidget {
     }
 
     final actors = actorsByMovie[movieID]!;
-    
-
 
     return SizedBox(
       height: 300,
       child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: actors.length,
-        itemBuilder: (context, index){
-          final actor = actors[index];
-          return Container(
-            padding: EdgeInsets.all(8),
-            width: 135        ,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FadeInRight(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child:  Image.network(
-                      actor.profilePath!,
-                      height: 170,
-                      width: 135,
-                      fit: BoxFit.cover
+          scrollDirection: Axis.horizontal,
+          itemCount: actors.length,
+          itemBuilder: (context, index) {
+            final actor = actors[index];
+            return Container(
+              padding: EdgeInsets.all(8),
+              width: 135,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FadeInRight(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(actor.profilePath!,
+                          height: 170, width: 135, fit: BoxFit.cover),
                     ),
-                    
                   ),
-                ),
-                const SizedBox( height: 5,),
-                Text(actor.name, maxLines: 1,),
-                Text(actor.character ?? '', maxLines: 1,
-                style:  const TextStyle(fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),)
-
-              ],
-            ),
-            
-
-          );
-        }
-        ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    actor.name,
+                    maxLines: 1,
+                  ),
+                  Text(
+                    actor.character ?? '',
+                    maxLines: 1,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis),
+                  )
+                ],
+              ),
+            );
+          }),
     );
   }
 }
@@ -193,6 +191,16 @@ class _CustomSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return SliverAppBar(
+      actions: [
+        IconButton(
+                onPressed: () {
+                  print( movie.id );
+                },
+                icon: 
+                  const Icon(Icons.favorite_border, ),
+                  //const Icon(Icons.favorite_rounded,color: Colors.red, ),
+                )
+      ],
       backgroundColor: Colors.black,
       expandedHeight: size.height * 0.70,
       foregroundColor: Colors.white,
@@ -205,21 +213,22 @@ class _CustomSliverAppBar extends StatelessWidget {
         ),
         background: Stack(
           children: [
+            
             SizedBox.expand(
               child: Image.network(
                 movie.posterPath,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
-                  if(loadingProgress != null)  return const SizedBox();
+                  if (loadingProgress != null) return const SizedBox();
                   return FadeIn(child: child);
                 },
               ),
             ),
             const _Gradient(
-                beginAlignment: Alignment.topCenter,
-                finalAlignment: Alignment.bottomCenter,
-                init: 0.7,
-                fin: 1.0),
+                beginAlignment: Alignment.topRight,
+                finalAlignment: Alignment.bottomLeft,
+                init: 0.0,
+                fin: 0.2),
           ],
         ),
       ),
@@ -246,7 +255,7 @@ class _Gradient extends StatelessWidget {
               gradient: LinearGradient(
                   begin: beginAlignment,
                   end: finalAlignment,
-                  colors: const [Colors.transparent, Colors.black87],
+                  colors: const [Colors.black54, Colors.transparent],
                   stops: [init, fin]))),
     );
   }
